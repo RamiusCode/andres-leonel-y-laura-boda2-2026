@@ -1,0 +1,214 @@
+---
+// DireccionSalon.astro
+---
+
+<section class="py-4 px-4 relative">
+  <div class="max-w-xl mx-auto text-center relative">
+    <!-- TÍTULO DIRECCIÓN -->
+    <div class="mb-2" id="titulo-direccion">
+      <h2
+        class="font-charm text-2xl md:text-3xl text-[#C9A961] font-bold tracking-wide"
+      >
+        Recepción Social
+      </h2>
+    </div>
+
+    <!-- 🏛️ ICONO DIRECCIÓN -->
+    <div class="relative mb-4" id="icono-salon">
+      <div class="flex justify-center">
+        <img
+          src="/imagenes/recepcion.png"
+          alt="Icono de dirección"
+          class="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain icono-dorado"
+        />
+      </div>
+    </div>
+
+    <!-- TÍTULO DIRECCIÓN -->
+    <div class="mb-2" id="titulo-salon">
+      <h2
+        class="font-charm text-2xl md:text-3xl text-[#C9A961] font-bold tracking-wide"
+      >
+        Dirección
+      </h2>
+    </div>
+
+    <!-- INFORMACIÓN DE UBICACIÓN -->
+    <div class="mb-2" id="info-direccion">
+      <!-- Nombre del lugar -->
+      <h3 class="font-charm text-xl md:text-2xl text-[#C9A961] font-bold mb-2">
+        Salón de Eventos Le Parc
+      </h3>
+
+      <!-- Dirección - ERA VERDE, AHORA LAVANDA -->
+      <p
+        class="font-charm text-lg md:text-xl text-[#8E7AB5] leading-relaxed mb-3"
+      >
+        Avenida Juana Azurduy de Padilla, Parada Ravelo, Sucre
+      </p>
+
+      <!-- Hora -->
+      <p class="font-charm text-xl md:text-2xl text-[#C9A961] font-bold">
+        Hora: 13:00
+      </p>
+    </div>
+
+    <!-- BOTÓN VER UBICACIÓN - ELEGANTE CON CÓDIGO -->
+    <div class="flex justify-center" id="boton-salon">
+      <a
+        href="https://maps.app.goo.gl/MDjDe1Mgs2zR3zScA"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="boton-ubicacion-elegante"
+      >
+        <span class="boton-icono">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+            ></path>
+          </svg>
+        </span>
+        <span class="boton-texto font-charm text-lg">Ver Ubicación</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (typeof window !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.set("#icono-salon", { opacity: 0, scale: 0.8 });
+      gsap.set("#titulo-salon", { opacity: 0, scale: 0.9 });
+      gsap.set("#info-salon", { opacity: 0, scale: 0.9 });
+      gsap.set("#boton-salon", { opacity: 0, scale: 0.9 });
+
+      ScrollTrigger.create({
+        trigger: "#icono-salon",
+        start: "top 85%",
+        end: "top 20%",
+        onEnter: () => {
+          const tl = gsap.timeline();
+          tl.to("#icono-salon, #titulo-salon, #info-salon, #boton-salon", {
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
+          })
+            .to(
+              "#icono-salon",
+              { scale: 1, duration: 1, ease: "back.out(1.5)" },
+              "<",
+            )
+            .to(
+              "#titulo-salon, #info-salon, #boton-salon",
+              { scale: 1, duration: 1, ease: "back.out(1.2)" },
+              "<",
+            );
+        },
+        onLeaveBack: () => {
+          const tl = gsap.timeline();
+          tl.to("#icono-salon, #titulo-salon, #info-salon, #boton-salon", {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.in",
+          })
+            .to(
+              "#icono-salon",
+              { scale: 0.8, duration: 0.5, ease: "power2.in" },
+              "<",
+            )
+            .to(
+              "#titulo-salon, #info-salon, #boton-salon",
+              { scale: 0.9, duration: 0.5, ease: "power2.in" },
+              "<",
+            );
+        },
+      });
+    });
+  }
+</script>
+
+<style>
+  /* Icono dorado - sin cambios */
+  .icono-dorado {
+    /* filter: brightness(0) saturate(100%) invert(73%) sepia(17%) saturate(1089%)
+      hue-rotate(358deg) brightness(92%) contrast(86%);
+    transition:
+      filter 0.3s ease,
+      transform 0.3s ease; */
+
+    filter: brightness(0) saturate(100%) invert(52%) sepia(20%) saturate(800%)
+      hue-rotate(230deg) brightness(90%) contrast(85%);
+    transition:
+      filter 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  /* Botón elegante lavanda */
+  .boton-ubicacion-elegante {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #8e7ab5, #b497bd);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(142, 122, 181, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .boton-ubicacion-elegante::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .boton-ubicacion-elegante:hover::before {
+    left: 100%;
+  }
+
+  .boton-ubicacion-elegante:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 28px rgba(142, 122, 181, 0.55);
+    background: linear-gradient(135deg, #7a68a0, #a386aa);
+  }
+
+  .boton-ubicacion-elegante:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  .boton-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .boton-texto {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+</style>

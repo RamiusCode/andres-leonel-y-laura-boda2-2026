@@ -1,0 +1,166 @@
+---
+// Reservas.astro
+interface Props {
+    numeroPases: number;
+}
+
+const { numeroPases = 1 } = Astro.props;
+---
+
+<section class="py-10 px-4 relative overflow-hidden">
+    <div class="max-w-sm mx-auto">
+        <!-- CARD -->
+        <div
+            class="bg-white/95 backdrop-blur-sm rounded-2xl border border-[#C9A961]/30 py-8 px-8 shadow-sm text-center"
+            id="card-reserva"
+        >
+            <!-- Texto elegante arriba -->
+            <div id="etiqueta-reserva" class="mb-4">
+                <p
+                    class="font-charm text-[#C9A961]/60 tracking-[0.3em] uppercase text-xs mb-1"
+                >
+                    Boda
+                </p>
+                <h3 class="font-great-vibes text-4xl text-[#C9A961]">
+                    Pase de Invitado
+                </h3>
+            </div>
+
+            <!-- Línea -->
+            <div class="flex items-center gap-2 mb-5" id="linea-reserva">
+                <div class="flex-1 h-px bg-[#C9A961]/30"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-[#C9A961]/50"></div>
+                <div class="flex-1 h-px bg-[#C9A961]/30"></div>
+            </div>
+
+            <!-- Imagen ticket -->
+            <div class="flex justify-center mb-5" id="ticket-reserva">
+                <img
+                    src="/imagenes/ticket.png"
+                    alt="Ticket"
+                    class="w-24 h-auto object-contain"
+                    style="filter: drop-shadow(0 4px 12px rgba(201,169,97,0.3));"
+                />
+            </div>
+
+            <!-- Número -->
+            <div id="numero-reserva" class="mb-3">
+                <span
+                    class="font-charm font-bold leading-none"
+                    style="font-size: 5rem; color: #C9A961; text-shadow: 0 4px 20px rgba(201,169,97,0.25);"
+                >
+                    {numeroPases}
+                </span>
+                <p
+                    class="font-charm text-sm text-[#C9A961]/70 tracking-[0.3em] uppercase mt-1"
+                >
+                    {numeroPases === 1 ? "Pase" : "Pases"}
+                </p>
+            </div>
+
+            <!-- Texto -->
+            <p
+                id="texto-reserva"
+                class="font-charm text-base text-[#626a54] leading-relaxed"
+            >
+                {
+                    numeroPases === 1
+                        ? "Tu presencia es lo más importante para nosotros"
+                        : `Esperamos contar con la presencia de ${numeroPases === 2 ? "ambos" : `los ${numeroPases}`}`
+                }
+            </p>
+        </div>
+    </div>
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Estado inicial — todo invisible, viene de abajo
+        gsap.set("#card-reserva", { opacity: 0, y: 40 });
+        gsap.set("#etiqueta-reserva", { opacity: 0, y: 20 });
+        gsap.set("#linea-reserva", { opacity: 0, y: 15 });
+        gsap.set("#ticket-reserva", { opacity: 0, y: 20 });
+        gsap.set("#numero-reserva", { opacity: 0, y: 20 });
+        gsap.set("#texto-reserva", { opacity: 0, y: 15 });
+
+        ScrollTrigger.create({
+            trigger: "#card-reserva",
+            start: "top 88%",
+
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                tl.to("#card-reserva", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                })
+                    .to(
+                        "#etiqueta-reserva",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power3.out",
+                        },
+                        "-=0.5",
+                    )
+                    .to(
+                        "#linea-reserva",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            ease: "power2.out",
+                        },
+                        "-=0.4",
+                    )
+                    .to(
+                        "#ticket-reserva",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power3.out",
+                        },
+                        "-=0.3",
+                    )
+                    .to(
+                        "#numero-reserva",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "back.out(1.4)",
+                        },
+                        "-=0.3",
+                    )
+                    .to(
+                        "#texto-reserva",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            ease: "power2.out",
+                        },
+                        "-=0.3",
+                    );
+            },
+
+            onLeaveBack: () => {
+                gsap.set("#card-reserva", { opacity: 0, y: 40 });
+                gsap.set("#etiqueta-reserva", { opacity: 0, y: 20 });
+                gsap.set("#linea-reserva", { opacity: 0, y: 15 });
+                gsap.set("#ticket-reserva", { opacity: 0, y: 20 });
+                gsap.set("#numero-reserva", { opacity: 0, y: 20 });
+                gsap.set("#texto-reserva", { opacity: 0, y: 15 });
+            },
+        });
+    });
+</script>
